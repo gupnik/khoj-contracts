@@ -1,0 +1,14 @@
+[features]
+seeds = false
+[programs.localnet]
+neo-contract = "9A65SzZCc7jpXpjnSLh2grtTsU95zno5MbjHXHXBu64X"
+
+[registry]
+url = "https://anchor.projectserum.com"
+
+[provider]
+cluster = "localnet"
+wallet = "./tests/test-key.json"
+
+[scripts]
+test = "yarn mocha tests/*.ts"

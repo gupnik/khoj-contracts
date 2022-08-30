@@ -1,0 +1,25 @@
+pub mod accept_proposal;
+pub mod accept_work;
+pub mod init_employer;
+pub mod init_job;
+pub mod init_platform;
+pub mod init_proposal;
+pub mod init_talent;
+pub mod restake;
+pub mod stake;
+pub mod submit_work;
+pub mod unstake;
+pub mod update_talent;
+
+pub use accept_proposal::*;
+pub use accept_work::*;
+pub use init_employer::*;
+pub use init_job::*;
+pub use init_platform::*;
+pub use init_proposal::*;
+pub use init_talent::*;
+pub use restake::*;
+pub use stake::*;
+pub use submit_work::*;
+pub use unstake::*;
+pub use update_talent::*;
