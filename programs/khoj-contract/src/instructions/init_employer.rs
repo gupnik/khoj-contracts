@@ -4,6 +4,8 @@ use {crate::state::*, anchor_lang::prelude::*};
 pub struct InitEmployerIx {
     pub name: String,
     pub pfp: Option<Pubkey>,
+    pub discord_handle: Option<String>,
+    pub twitter_handle: Option<String>,
 }
 
 #[derive(Accounts)]
@@ -11,7 +13,7 @@ pub struct InitEmployerCtx<'info> {
     #[account(
         init,
         payer = payer,
-        space = EMPLOYER_SIZE,
+        space = Employer::size(),
         seeds = [EMPLOYER_PREFIX.as_bytes(), payer.key().as_ref()],
         bump
     )]
@@ -32,6 +34,14 @@ pub fn handler(ctx: Context<InitEmployerCtx>, ix: InitEmployerIx) -> Result<()> 
 
     employer.created_job_count = 0;
     employer.stake_amount = 0;
+
+    if let Some(_) = ix.discord_handle {
+        employer.discord_handle = ix.discord_handle;
+    }
+
+    if let Some(_) = ix.twitter_handle {
+        employer.twitter_handle = ix.twitter_handle;
+    }
 
     Ok(())
 }

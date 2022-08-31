@@ -18,6 +18,10 @@ pub mod khoj_contract {
         init_employer::handler(ctx, ix)
     }
 
+    pub fn update_employer(ctx: Context<UpdateEmployerCtx>, ix: UpdateEmployerIx) -> Result<()> {
+        update_employer::handler(ctx, ix)
+    }
+
     pub fn init_talent(ctx: Context<InitTalentCtx>, ix: InitTalentIx) -> Result<()> {
         init_talent::handler(ctx, ix)
     }
@@ -40,6 +44,12 @@ pub mod khoj_contract {
 
     pub fn init_job(ctx: Context<InitJobCtx>, ix: InitJobIx) -> Result<()> {
         init_job::handler(ctx, ix)
+    }
+
+    pub fn close_job<'key, 'accounts, 'remaining, 'info>(
+        ctx: Context<'key, 'accounts, 'remaining, 'info, CloseJobCtx<'info>>,
+    ) -> Result<()> {
+        close_job::handler(ctx)
     }
 
     pub fn init_proposal(ctx: Context<InitProposalCtx>, ix: InitProposalIx) -> Result<()> {

@@ -5,14 +5,47 @@ import { PublicKey, Transaction } from '@solana/web3.js'
 import {
   withAcceptProposal,
   withAcceptWork,
+  withCloseJob,
+  withInitEmployer,
   withInitJob,
   withInitProposal,
   withInitTalent,
   withStake,
   withSubmitWork,
   withUnstake,
+  withUpdateEmployer,
   withUpdateTalent,
 } from './transactions'
+
+export const registerEmployer = async (
+  connection: Connection,
+  wallet: Wallet,
+  params: {
+    creator: PublicKey
+    name: string
+    pfpId?: PublicKey
+    discordHandle?: string
+    twitterHandle?: string
+  }
+): Promise<[Transaction, PublicKey]> => {
+  const transaction = new Transaction()
+
+  return withInitEmployer(transaction, connection, wallet, params)
+}
+
+export const updateEmployer = async (
+  connection: Connection,
+  wallet: Wallet,
+  params: {
+    creator: PublicKey
+    name?: string
+    pfpId?: PublicKey
+  }
+): Promise<[Transaction, PublicKey]> => {
+  const transaction = new Transaction()
+
+  return await withUpdateEmployer(transaction, connection, wallet, params)
+}
 
 export const registerTalent = async (
   connection: Connection,
@@ -22,6 +55,8 @@ export const registerTalent = async (
     name: string
     skills: string[]
     pfpId?: PublicKey
+    discordHandle?: string
+    twitterHandle?: string
   }
 ): Promise<[Transaction, PublicKey]> => {
   const transaction = new Transaction()
@@ -88,6 +123,19 @@ export const createJob = async (
   const transaction = new Transaction()
 
   return await withInitJob(transaction, connection, wallet, params)
+}
+
+export const closeJob = async (
+  connection: Connection,
+  wallet: Wallet,
+  params: {
+    creator: PublicKey
+    jobId: PublicKey
+  }
+): Promise<Transaction> => {
+  const transaction = new Transaction()
+
+  return await withCloseJob(transaction, connection, wallet, params)
 }
 
 export const createProposal = async (

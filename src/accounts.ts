@@ -149,14 +149,14 @@ export const getAvailableJobs = async (
   )
 }
 
-export const getCreatedJobsForUser = async (
+export const getCreatedJobsForEmployer = async (
   connection: Connection,
-  user: PublicKey
+  employer: PublicKey
 ): Promise<AccountData<JobData>[]> => {
   const programAccounts = await connection.getProgramAccounts(
     KHOJ_CONTRACT_PROGRAM_ADDRESS,
     {
-      filters: [{ memcmp: { offset: CREATOR_OFFSET, bytes: user.toBase58() } }],
+      filters: [{ memcmp: { offset: CREATOR_OFFSET, bytes: employer.toBase58() } }],
     }
   )
 
@@ -236,14 +236,14 @@ export const getSubmittedProposalsForJob = async (
   )
 }
 
-export const getSubmittedProposalsForUser = async (
+export const getSubmittedProposalsForTalent = async (
   connection: Connection,
-  user: PublicKey
+  talent: PublicKey
 ): Promise<AccountData<ProposalData>[]> => {
   const programAccounts = await connection.getProgramAccounts(
     KHOJ_CONTRACT_PROGRAM_ADDRESS,
     {
-      filters: [{ memcmp: { offset: CREATOR_OFFSET, bytes: user.toBase58() } }],
+      filters: [{ memcmp: { offset: CREATOR_OFFSET, bytes: talent.toBase58() } }],
     }
   )
 

@@ -1,5 +1,6 @@
 pub mod accept_proposal;
 pub mod accept_work;
+pub mod close_job;
 pub mod init_employer;
 pub mod init_job;
 pub mod init_platform;
@@ -9,10 +10,12 @@ pub mod restake;
 pub mod stake;
 pub mod submit_work;
 pub mod unstake;
+pub mod update_employer;
 pub mod update_talent;
 
 pub use accept_proposal::*;
 pub use accept_work::*;
+pub use close_job::*;
 pub use init_employer::*;
 pub use init_job::*;
 pub use init_platform::*;
@@ -22,4 +25,5 @@ pub use restake::*;
 pub use stake::*;
 pub use submit_work::*;
 pub use unstake::*;
+pub use update_employer::*;
 pub use update_talent::*;

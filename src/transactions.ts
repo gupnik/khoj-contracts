@@ -14,6 +14,7 @@ import {
 import {
   acceptProposalInstr,
   acceptWorkInstr,
+  closeJobInstr,
   initEmployer,
   initJob,
   initPlatformInstr,
@@ -23,6 +24,7 @@ import {
   stakeInstr,
   submitWorkInstr,
   unstakeInstr,
+  updateEmployerInstr,
   updateTalentInstr,
 } from './instructions'
 import {
@@ -72,12 +74,37 @@ export const withInitEmployer = async (
     creator: PublicKey
     name: string
     pfpId?: PublicKey
+    discordHandle?: string
+    twitterHandle?: string
   }
 ): Promise<[Transaction, PublicKey]> => {
   const [employerId] = await findEmployerId(params.creator)
 
   transaction.add(
     await initEmployer(connection, wallet, {
+      ...params,
+      employerId,
+    })
+  )
+  return [transaction, employerId]
+}
+
+export const withUpdateEmployer = async (
+  transaction: Transaction,
+  connection: Connection,
+  wallet: Wallet,
+  params: {
+    creator: PublicKey
+    name?: string
+    pfpId?: PublicKey
+    discordHandle?: string
+    twitterHandle?: string
+  }
+): Promise<[Transaction, PublicKey]> => {
+  const [employerId] = await findEmployerId(params.creator)
+
+  transaction.add(
+    await updateEmployerInstr(connection, wallet, {
       ...params,
       employerId,
     })
@@ -94,6 +121,8 @@ export const withInitTalent = async (
     name: string
     skills: string[]
     pfpId?: PublicKey
+    discordHandle?: string
+    twitterHandle?: string
   }
 ): Promise<[Transaction, PublicKey]> => {
   const [talentId] = await findTalentId(params.creator)
@@ -115,6 +144,8 @@ export const withUpdateTalent = async (
     creator: PublicKey
     name?: string
     pfpId?: PublicKey
+    discordHandle?: string
+    twitterHandle?: string
   }
 ): Promise<[Transaction, PublicKey]> => {
   const [talentId] = await findTalentId(params.creator)
@@ -281,6 +312,24 @@ export const withInitJob = async (
     })
   )
   return [transaction, jobId]
+}
+
+export const withCloseJob = async (
+  transaction: Transaction,
+  connection: Connection,
+  wallet: Wallet,
+  params: {
+    creator: PublicKey
+    jobId: PublicKey
+  }
+): Promise<Transaction> => {
+  transaction.add(
+    await closeJobInstr(connection, wallet, {
+      creator: params.creator,
+      jobId: params.jobId,
+    })
+  )
+  return transaction
 }
 
 export const withInitProposal = async (

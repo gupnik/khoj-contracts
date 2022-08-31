@@ -5,6 +5,8 @@ pub struct InitTalentIx {
     pub name: String,
     pub pfp: Option<Pubkey>,
     pub skills: Vec<String>,
+    pub discord_handle: Option<String>,
+    pub twitter_handle: Option<String>,
 }
 
 #[derive(Accounts)]
@@ -13,7 +15,7 @@ pub struct InitTalentCtx<'info> {
     #[account(
         init,
         payer = payer,
-        space = Talent::size(ix),
+        space = Talent::size(),
         seeds = [TALENT_PREFIX.as_bytes(), payer.key().as_ref()],
         bump
     )]
@@ -34,6 +36,14 @@ pub fn handler(ctx: Context<InitTalentCtx>, ix: InitTalentIx) -> Result<()> {
     talent.skills = ix.skills;
 
     talent.stake_amount = 0;
+
+    if let Some(_) = ix.discord_handle {
+        talent.discord_handle = ix.discord_handle;
+    }
+
+    if let Some(_) = ix.twitter_handle {
+        talent.twitter_handle = ix.twitter_handle;
+    }
 
     Ok(())
 }

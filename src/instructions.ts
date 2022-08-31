@@ -46,6 +46,8 @@ export const initEmployer = (
     name: string
     employerId: PublicKey
     pfpId?: PublicKey
+    discordHandle?: string
+    twitterHandle?: string
   }
 ): Promise<TransactionInstruction> => {
   const provider = new AnchorProvider(connection, wallet, {})
@@ -58,6 +60,41 @@ export const initEmployer = (
     .initEmployer({
       name: params.name,
       pfp: params.pfpId || null,
+      discordHandle: params.discordHandle || null,
+      twitterHandle: params.twitterHandle || null
+    })
+    .accounts({
+      employer: params.employerId,
+      payer: params.creator,
+      systemProgram: SystemProgram.programId,
+    })
+    .instruction()
+}
+
+export const updateEmployerInstr = (
+  connection: Connection,
+  wallet: Wallet,
+  params: {
+    creator: PublicKey
+    employerId: PublicKey
+    name?: string
+    pfpId?: PublicKey
+    discordHandle?: string
+    twitterHandle?: string
+  }
+): Promise<TransactionInstruction> => {
+  const provider = new AnchorProvider(connection, wallet, {})
+  const neoProgram = new Program<KHOJ_PROGRAM>(
+    KHOJ_IDL,
+    KHOJ_CONTRACT_PROGRAM_ADDRESS,
+    provider
+  )
+  return neoProgram.methods
+    .updateEmployer({
+      name: params.name || null,
+      pfp: params.pfpId || null,
+      discordHandle: params.discordHandle || null,
+      twitterHandle: params.twitterHandle || null
     })
     .accounts({
       employer: params.employerId,
@@ -76,6 +113,8 @@ export const initTalent = (
     talentId: PublicKey
     skills: string[]
     pfpId?: PublicKey
+    discordHandle?: string
+    twitterHandle?: string
   }
 ): Promise<TransactionInstruction> => {
   const provider = new AnchorProvider(connection, wallet, {})
@@ -88,7 +127,9 @@ export const initTalent = (
     .initTalent({
       name: params.name,
       pfp: params.pfpId || null,
-      skills: params.skills
+      skills: params.skills,
+      discordHandle: params.discordHandle || null,
+      twitterHandle: params.twitterHandle || null
     })
     .accounts({
       talent: params.talentId,
@@ -106,6 +147,8 @@ export const updateTalentInstr = (
     talentId: PublicKey
     name?: string
     pfpId?: PublicKey
+    discordHandle?: string
+    twitterHandle?: string
   }
 ): Promise<TransactionInstruction> => {
   const provider = new AnchorProvider(connection, wallet, {})
@@ -118,6 +161,8 @@ export const updateTalentInstr = (
     .updateTalent({
       name: params.name || null,
       pfp: params.pfpId || null,
+      discordHandle: params.discordHandle || null,
+      twitterHandle: params.twitterHandle || null
     })
     .accounts({
       talent: params.talentId,
@@ -264,6 +309,29 @@ export const initJob = (
       creator: params.creator,
       tokenProgram: TOKEN_PROGRAM_ID,
       systemProgram: SystemProgram.programId,
+    })
+    .instruction()
+}
+
+export const closeJobInstr = (
+  connection: Connection,
+  wallet: Wallet,
+  params: {
+    creator: PublicKey
+    jobId: PublicKey
+  }
+): Promise<TransactionInstruction> => {
+  const provider = new AnchorProvider(connection, wallet, {})
+  const neoProgram = new Program<KHOJ_PROGRAM>(
+    KHOJ_IDL,
+    KHOJ_CONTRACT_PROGRAM_ADDRESS,
+    provider
+  )
+  return neoProgram.methods
+    .closeJob()
+    .accounts({
+      job: params.jobId,
+      creator: params.creator
     })
     .instruction()
 }

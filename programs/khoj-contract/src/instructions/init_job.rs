@@ -19,7 +19,7 @@ pub struct InitJobCtx<'info> {
     #[account(
         init,
         payer = creator,
-        space = Job::size(ix),
+        space = Job::size(),
         seeds = [JOB_PREFIX.as_bytes(), employer.key().as_ref(), employer.created_job_count.to_le_bytes().as_ref()],
         bump
     )]
@@ -45,12 +45,15 @@ pub fn handler(ctx: Context<InitJobCtx>, ix: InitJobIx) -> Result<()> {
     job.bump = *ctx.bumps.get("job").unwrap();
     job.creator = ctx.accounts.creator.key();
 
-    job.state = 0;
     job.title = ix.title;
     job.uri = ix.uri;
-    job.proposal_count = 0;
+    job.category = ix.category;
+    job.job_type = ix.job_type;
     job.price = ix.price;
     job.price_mint = ctx.accounts.price_mint.key();
+
+    job.state = 0;
+    job.proposal_count = 0;
     job.accepted_proposal = Pubkey::default();
 
     employer.created_job_count += 1;

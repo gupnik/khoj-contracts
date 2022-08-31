@@ -4,7 +4,7 @@ use {
 };
 
 #[derive(AnchorSerialize, AnchorDeserialize)]
-pub struct UpdateTalentIx {
+pub struct UpdateEmployerIx {
     pub name: Option<String>,
     pub pfp: Option<Pubkey>,
     pub discord_handle: Option<String>,
@@ -12,32 +12,32 @@ pub struct UpdateTalentIx {
 }
 
 #[derive(Accounts)]
-pub struct UpdateTalentCtx<'info> {
-    #[account(mut, constraint = talent.wallet == payer.key() @ErrorCode::Unauthorized)]
-    talent: Account<'info, Talent>,
+pub struct UpdateEmployerCtx<'info> {
+    #[account(mut, constraint = employer.wallet == payer.key() @ErrorCode::Unauthorized)]
+    employer: Account<'info, Employer>,
 
     #[account(mut)]
     payer: Signer<'info>,
     system_program: Program<'info, System>,
 }
 
-pub fn handler(ctx: Context<UpdateTalentCtx>, ix: UpdateTalentIx) -> Result<()> {
-    let talent = &mut ctx.accounts.talent;
+pub fn handler(ctx: Context<UpdateEmployerCtx>, ix: UpdateEmployerIx) -> Result<()> {
+    let employer = &mut ctx.accounts.employer;
 
     if let Some(name) = ix.name {
-        talent.name = name;
+        employer.name = name;
     }
 
     if let Some(_) = ix.pfp {
-        talent.pfp = ix.pfp;
+        employer.pfp = ix.pfp;
     }
 
     if let Some(_) = ix.discord_handle {
-        talent.discord_handle = ix.discord_handle;
+        employer.discord_handle = ix.discord_handle;
     }
 
     if let Some(_) = ix.twitter_handle {
-        talent.twitter_handle = ix.twitter_handle;
+        employer.twitter_handle = ix.twitter_handle;
     }
 
     Ok(())

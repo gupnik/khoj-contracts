@@ -16,7 +16,7 @@ pub struct InitProposalCtx<'info> {
     #[account(
         init,
         payer = proposer,
-        space = Proposal::size(ix),
+        space = Proposal::size(),
         seeds = [PROPOSAL_PREFIX.as_bytes(), job.key().as_ref(), proposer.key().as_ref()],
         bump
     )]

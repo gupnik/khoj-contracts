@@ -69,6 +69,34 @@ export type KhojContract = {
       ]
     },
     {
+      "name": "updateEmployer",
+      "accounts": [
+        {
+          "name": "employer",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "ix",
+          "type": {
+            "defined": "UpdateEmployerIx"
+          }
+        }
+      ]
+    },
+    {
       "name": "initTalent",
       "accounts": [
         {
@@ -327,6 +355,22 @@ export type KhojContract = {
       ]
     },
     {
+      "name": "closeJob",
+      "accounts": [
+        {
+          "name": "job",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "creator",
+          "isMut": true,
+          "isSigner": true
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "initProposal",
       "accounts": [
         {
@@ -565,6 +609,18 @@ export type KhojContract = {
           {
             "name": "createdJobCount",
             "type": "u64"
+          },
+          {
+            "name": "discordHandle",
+            "type": {
+              "option": "string"
+            }
+          },
+          {
+            "name": "twitterHandle",
+            "type": {
+              "option": "string"
+            }
           }
         ]
       }
@@ -604,6 +660,18 @@ export type KhojContract = {
             "name": "skills",
             "type": {
               "vec": "string"
+            }
+          },
+          {
+            "name": "discordHandle",
+            "type": {
+              "option": "string"
+            }
+          },
+          {
+            "name": "twitterHandle",
+            "type": {
+              "option": "string"
             }
           }
         ]
@@ -747,6 +815,18 @@ export type KhojContract = {
             "type": {
               "option": "publicKey"
             }
+          },
+          {
+            "name": "discordHandle",
+            "type": {
+              "option": "string"
+            }
+          },
+          {
+            "name": "twitterHandle",
+            "type": {
+              "option": "string"
+            }
           }
         ]
       }
@@ -822,6 +902,18 @@ export type KhojContract = {
             "type": {
               "vec": "string"
             }
+          },
+          {
+            "name": "discordHandle",
+            "type": {
+              "option": "string"
+            }
+          },
+          {
+            "name": "twitterHandle",
+            "type": {
+              "option": "string"
+            }
           }
         ]
       }
@@ -870,6 +962,38 @@ export type KhojContract = {
       }
     },
     {
+      "name": "UpdateEmployerIx",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "name",
+            "type": {
+              "option": "string"
+            }
+          },
+          {
+            "name": "pfp",
+            "type": {
+              "option": "publicKey"
+            }
+          },
+          {
+            "name": "discordHandle",
+            "type": {
+              "option": "string"
+            }
+          },
+          {
+            "name": "twitterHandle",
+            "type": {
+              "option": "string"
+            }
+          }
+        ]
+      }
+    },
+    {
       "name": "UpdateTalentIx",
       "type": {
         "kind": "struct",
@@ -884,6 +1008,18 @@ export type KhojContract = {
             "name": "pfp",
             "type": {
               "option": "publicKey"
+            }
+          },
+          {
+            "name": "discordHandle",
+            "type": {
+              "option": "string"
+            }
+          },
+          {
+            "name": "twitterHandle",
+            "type": {
+              "option": "string"
             }
           }
         ]
@@ -995,6 +1131,34 @@ export const IDL: KhojContract = {
       ]
     },
     {
+      "name": "updateEmployer",
+      "accounts": [
+        {
+          "name": "employer",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "ix",
+          "type": {
+            "defined": "UpdateEmployerIx"
+          }
+        }
+      ]
+    },
+    {
       "name": "initTalent",
       "accounts": [
         {
@@ -1253,6 +1417,22 @@ export const IDL: KhojContract = {
       ]
     },
     {
+      "name": "closeJob",
+      "accounts": [
+        {
+          "name": "job",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "creator",
+          "isMut": true,
+          "isSigner": true
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "initProposal",
       "accounts": [
         {
@@ -1491,6 +1671,18 @@ export const IDL: KhojContract = {
           {
             "name": "createdJobCount",
             "type": "u64"
+          },
+          {
+            "name": "discordHandle",
+            "type": {
+              "option": "string"
+            }
+          },
+          {
+            "name": "twitterHandle",
+            "type": {
+              "option": "string"
+            }
           }
         ]
       }
@@ -1530,6 +1722,18 @@ export const IDL: KhojContract = {
             "name": "skills",
             "type": {
               "vec": "string"
+            }
+          },
+          {
+            "name": "discordHandle",
+            "type": {
+              "option": "string"
+            }
+          },
+          {
+            "name": "twitterHandle",
+            "type": {
+              "option": "string"
             }
           }
         ]
@@ -1673,6 +1877,18 @@ export const IDL: KhojContract = {
             "type": {
               "option": "publicKey"
             }
+          },
+          {
+            "name": "discordHandle",
+            "type": {
+              "option": "string"
+            }
+          },
+          {
+            "name": "twitterHandle",
+            "type": {
+              "option": "string"
+            }
           }
         ]
       }
@@ -1748,6 +1964,18 @@ export const IDL: KhojContract = {
             "type": {
               "vec": "string"
             }
+          },
+          {
+            "name": "discordHandle",
+            "type": {
+              "option": "string"
+            }
+          },
+          {
+            "name": "twitterHandle",
+            "type": {
+              "option": "string"
+            }
           }
         ]
       }
@@ -1796,6 +2024,38 @@ export const IDL: KhojContract = {
       }
     },
     {
+      "name": "UpdateEmployerIx",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "name",
+            "type": {
+              "option": "string"
+            }
+          },
+          {
+            "name": "pfp",
+            "type": {
+              "option": "publicKey"
+            }
+          },
+          {
+            "name": "discordHandle",
+            "type": {
+              "option": "string"
+            }
+          },
+          {
+            "name": "twitterHandle",
+            "type": {
+              "option": "string"
+            }
+          }
+        ]
+      }
+    },
+    {
       "name": "UpdateTalentIx",
       "type": {
         "kind": "struct",
@@ -1810,6 +2070,18 @@ export const IDL: KhojContract = {
             "name": "pfp",
             "type": {
               "option": "publicKey"
+            }
+          },
+          {
+            "name": "discordHandle",
+            "type": {
+              "option": "string"
+            }
+          },
+          {
+            "name": "twitterHandle",
+            "type": {
+              "option": "string"
             }
           }
         ]
