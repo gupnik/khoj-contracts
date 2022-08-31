@@ -1,4 +1,4 @@
-import { utils } from '@project-serum/anchor'
+import { BN, utils } from '@project-serum/anchor'
 import { SignerWallet } from '@saberhq/solana-contrib'
 import { Keypair, PublicKey, Transaction } from '@solana/web3.js'
 import { fail } from 'assert'
@@ -7,7 +7,7 @@ import * as splToken from '@solana/spl-token'
 import { connectionFor } from './connection'
 import dotenv from 'dotenv'
 
-import { withInitPlatform } from '../src/transactions'
+import { createJob } from '../src/apis'
 import { executeTransaction } from '../src/utils'
 
 import aidrop_key from '../airdrop.json'
@@ -15,9 +15,9 @@ import test_key from '../tests/test-key.json'
 
 dotenv.config()
 
-const wallet = Keypair.fromSecretKey(new Uint8Array(aidrop_key))
+// const wallet = Keypair.fromSecretKey(new Uint8Array(aidrop_key))
 
-const owner_wallet = Keypair.fromSecretKey(new Uint8Array(test_key))
+const wallet = Keypair.fromSecretKey(new Uint8Array(test_key))
 
 // console.log(utils.bytes.bs58.encode(wallet.secretKey));
 
@@ -38,23 +38,23 @@ const main = async (cluster = 'localnet') => {
 
   await mint.mintTo(tokenAccount, wallet.publicKey, [], amount)
 
-  const transaction = new Transaction()
-
   try {
-    const [_, platformId] = await withInitPlatform(
-      transaction,
+    const [transaction] = await createJob(
       connection,
-      new SignerWallet(owner_wallet),
+      new SignerWallet(wallet),
       {
-        creator: owner_wallet.publicKey,
-        mintId: mint.publicKey,
+        creator: wallet.publicKey,
+        title: "SRE",
+        category: "Devops",
+        uri: "qR_tPj_AoW7QKEKoc8JzLFDJGuCbXEV6p6lHkYQg9Wk",
+        price: new BN(100),
+        priceMint: mint.publicKey
       }
     )
-    console.log(platformId.toBase58())
 
     await executeTransaction(
       connection,
-      new SignerWallet(owner_wallet),
+      new SignerWallet(wallet),
       transaction,
       {
         confirmOptions: {
