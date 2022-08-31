@@ -30,7 +30,7 @@ pub const MAX_SKILL_LENGTH: usize = 20;
 
 pub const MAX_CATEGORY_LENGTH: usize = 20;
 pub const MAX_TITLE_LENGTH: usize = 30;
-pub const MAX_URI_LENGTH: usize = 30;
+pub const MAX_URI_LENGTH: usize = 40;
 
 #[account]
 pub struct Platform {
