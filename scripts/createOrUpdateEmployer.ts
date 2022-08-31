@@ -31,6 +31,7 @@ const main = async (cluster = 'localnet') => {
   )
 
   const name = "Khoj";
+  const pfpId = new PublicKey("GGYWCyPRjFNqhXesgxcKTktoh1LSporcdzWDURXNNMWh");
   
 
   try {
@@ -42,7 +43,8 @@ const main = async (cluster = 'localnet') => {
         new SignerWallet(wallet),
         {
           creator: wallet.publicKey,
-          name
+          name,
+          pfpId
         }
       )
     } else {
@@ -51,7 +53,8 @@ const main = async (cluster = 'localnet') => {
         new SignerWallet(wallet),
         {
           creator: wallet.publicKey,
-          name
+          name,
+          pfpId
         }
       )
     }
