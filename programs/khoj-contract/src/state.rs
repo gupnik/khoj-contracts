@@ -89,6 +89,7 @@ pub struct Job {
     pub price_mint: Pubkey,
     pub proposal_count: u64,
     pub accepted_proposal: Pubkey,
+    pub created_at: i64,
 }
 
 impl Job {
@@ -116,6 +117,7 @@ pub struct Proposal {
     pub state: u8,
     pub uri: String,
     pub price: u64,
+    pub created_at: i64,
 }
 
 impl Proposal {

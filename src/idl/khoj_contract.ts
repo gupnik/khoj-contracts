@@ -725,6 +725,10 @@ export type KhojContract = {
           {
             "name": "acceptedProposal",
             "type": "publicKey"
+          },
+          {
+            "name": "createdAt",
+            "type": "i64"
           }
         ]
       }
@@ -757,6 +761,10 @@ export type KhojContract = {
           {
             "name": "price",
             "type": "u64"
+          },
+          {
+            "name": "createdAt",
+            "type": "i64"
           }
         ]
       }
@@ -1787,6 +1795,10 @@ export const IDL: KhojContract = {
           {
             "name": "acceptedProposal",
             "type": "publicKey"
+          },
+          {
+            "name": "createdAt",
+            "type": "i64"
           }
         ]
       }
@@ -1819,6 +1831,10 @@ export const IDL: KhojContract = {
           {
             "name": "price",
             "type": "u64"
+          },
+          {
+            "name": "createdAt",
+            "type": "i64"
           }
         ]
       }

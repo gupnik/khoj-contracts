@@ -122,6 +122,28 @@ export const getJobData = async (
   }
 }
 
+export const getJobDatas = async (
+  connection: Connection,
+  jobIds: PublicKey[]
+): Promise<AccountData<JobData>[]> => {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const provider = new AnchorProvider(connection, null, {})
+  const khojProgram = new Program<KHOJ_PROGRAM>(
+    KHOJ_IDL,
+    KHOJ_CONTRACT_PROGRAM_ADDRESS,
+    provider
+  )
+
+  const jobDatas = (await khojProgram.account.job.fetchMultiple(
+    jobIds
+  )) as JobData[];
+  return jobDatas.map((tm, i) => ({
+    parsed: tm,
+    pubkey: jobIds[i]!,
+  }));
+}
+
 export const getAvailableJobs = async (
   connection: Connection
 ): Promise<AccountData<JobData>[]> => {

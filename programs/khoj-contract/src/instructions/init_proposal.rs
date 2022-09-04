@@ -46,6 +46,7 @@ pub fn handler(ctx: Context<InitProposalCtx>, ix: InitProposalIx) -> Result<()> 
     proposal.price = ix.price;
     proposal.job = job.key();
     proposal.state = 0;
+    proposal.created_at = Clock::get().unwrap().unix_timestamp;
 
     job.proposal_count += 1;
     talent.submitted_proposal_count += 1;

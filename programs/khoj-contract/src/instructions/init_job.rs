@@ -51,6 +51,7 @@ pub fn handler(ctx: Context<InitJobCtx>, ix: InitJobIx) -> Result<()> {
     job.job_type = ix.job_type;
     job.price = ix.price;
     job.price_mint = ctx.accounts.price_mint.key();
+    job.created_at = Clock::get().unwrap().unix_timestamp;
 
     job.state = 0;
     job.proposal_count = 0;
