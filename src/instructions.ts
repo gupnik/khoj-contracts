@@ -44,6 +44,7 @@ export const initEmployer = (
   params: {
     creator: PublicKey
     name: string
+    uri: string
     employerId: PublicKey
     pfpId?: PublicKey
     discordHandle?: string
@@ -59,6 +60,7 @@ export const initEmployer = (
   return neoProgram.methods
     .initEmployer({
       name: params.name,
+      uri: params.uri,
       pfp: params.pfpId || null,
       discordHandle: params.discordHandle || null,
       twitterHandle: params.twitterHandle || null
@@ -104,12 +106,43 @@ export const updateEmployerInstr = (
     .instruction()
 }
 
+export const aggregateInstr = (
+  connection: Connection,
+  wallet: Wallet,
+  params: {
+    creator: PublicKey
+    aggregatorLinkId: PublicKey
+    aggregatorId: PublicKey
+    employerId: PublicKey
+  }
+): Promise<TransactionInstruction> => {
+  const provider = new AnchorProvider(connection, wallet, {})
+  const neoProgram = new Program<KHOJ_PROGRAM>(
+    KHOJ_IDL,
+    KHOJ_CONTRACT_PROGRAM_ADDRESS,
+    provider
+  )
+  return neoProgram.methods
+    .aggregate({
+      
+    })
+    .accounts({
+      aggregatorLink: params.aggregatorLinkId,
+      aggregator: params.aggregatorId,
+      employer: params.employerId,
+      payer: params.creator,
+      systemProgram: SystemProgram.programId,
+    })
+    .instruction()
+}
+
 export const initTalent = (
   connection: Connection,
   wallet: Wallet,
   params: {
     creator: PublicKey
     name: string
+    uri: string
     talentId: PublicKey
     skills: string[]
     pfpId?: PublicKey
@@ -126,6 +159,7 @@ export const initTalent = (
   return neoProgram.methods
     .initTalent({
       name: params.name,
+      uri: params.uri,
       pfp: params.pfpId || null,
       skills: params.skills,
       discordHandle: params.discordHandle || null,

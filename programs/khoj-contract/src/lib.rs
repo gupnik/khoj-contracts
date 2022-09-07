@@ -22,6 +22,10 @@ pub mod khoj_contract {
         update_employer::handler(ctx, ix)
     }
 
+    pub fn aggregate(ctx: Context<AggregateCtx>, ix: AggregateIx) -> Result<()> {
+        aggregate::handler(ctx, ix)
+    }
+
     pub fn init_talent(ctx: Context<InitTalentCtx>, ix: InitTalentIx) -> Result<()> {
         init_talent::handler(ctx, ix)
     }

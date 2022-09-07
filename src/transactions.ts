@@ -3,6 +3,7 @@ import type { Connection, PublicKey, Transaction } from '@solana/web3.js'
 import type { Wallet } from '@saberhq/solana-contrib'
 import { tryGetAccount, withFindOrInitAssociatedTokenAccount } from './utils'
 import {
+  findAggregatorLinkId,
   findEmployerId,
   findEscrowId,
   findJobId,
@@ -14,6 +15,7 @@ import {
 import {
   acceptProposalInstr,
   acceptWorkInstr,
+  aggregateInstr,
   closeJobInstr,
   initEmployer,
   initJob,
@@ -73,6 +75,7 @@ export const withInitEmployer = async (
   params: {
     creator: PublicKey
     name: string
+    uri: string
     pfpId?: PublicKey
     discordHandle?: string
     twitterHandle?: string
@@ -112,6 +115,30 @@ export const withUpdateEmployer = async (
   return [transaction, employerId]
 }
 
+export const withAggregate = async (
+  transaction: Transaction,
+  connection: Connection,
+  wallet: Wallet,
+  params: {
+    creator: PublicKey
+    employer: PublicKey
+  }
+): Promise<[Transaction, PublicKey]> => {
+  const [aggregatorId] = await findEmployerId(params.creator)
+  const [employerId] = await findEmployerId(params.employer)
+  const [aggregatorLinkId] = await findAggregatorLinkId(aggregatorId, employerId);
+
+  transaction.add(
+    await aggregateInstr(connection, wallet, {
+      ...params,
+      aggregatorLinkId,
+      aggregatorId,
+      employerId
+    })
+  )
+  return [transaction, aggregatorLinkId]
+}
+
 export const withInitTalent = async (
   transaction: Transaction,
   connection: Connection,
@@ -119,6 +146,7 @@ export const withInitTalent = async (
   params: {
     creator: PublicKey
     name: string
+    uri: string
     skills: string[]
     pfpId?: PublicKey
     discordHandle?: string
@@ -292,6 +320,7 @@ export const withInitJob = async (
       await initEmployer(connection, wallet, {
         creator: params.creator,
         name: '',
+        uri: '',
         employerId: employerId,
       })
     )
@@ -354,6 +383,7 @@ export const withInitProposal = async (
       await initTalent(connection, wallet, {
         creator: params.proposer,
         name: '',
+        uri: '',
         skills: [],
         talentId: talentId,
       })

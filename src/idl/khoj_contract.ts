@@ -97,6 +97,44 @@ export type KhojContract = {
       ]
     },
     {
+      "name": "aggregate",
+      "accounts": [
+        {
+          "name": "aggregatorLink",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "aggregator",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "employer",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "ix",
+          "type": {
+            "defined": "AggregateIx"
+          }
+        }
+      ]
+    },
+    {
       "name": "initTalent",
       "accounts": [
         {
@@ -580,6 +618,26 @@ export type KhojContract = {
       }
     },
     {
+      "name": "aggregatorLink",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "aggregator",
+            "type": "publicKey"
+          },
+          {
+            "name": "employer",
+            "type": "publicKey"
+          }
+        ]
+      }
+    },
+    {
       "name": "employer",
       "type": {
         "kind": "struct",
@@ -603,6 +661,10 @@ export type KhojContract = {
             "type": "string"
           },
           {
+            "name": "uri",
+            "type": "string"
+          },
+          {
             "name": "stakeAmount",
             "type": "u64"
           },
@@ -621,6 +683,10 @@ export type KhojContract = {
             "type": {
               "option": "string"
             }
+          },
+          {
+            "name": "isAggregator",
+            "type": "bool"
           }
         ]
       }
@@ -646,6 +712,10 @@ export type KhojContract = {
           },
           {
             "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "uri",
             "type": "string"
           },
           {
@@ -810,12 +880,23 @@ export type KhojContract = {
       }
     },
     {
+      "name": "AggregateIx",
+      "type": {
+        "kind": "struct",
+        "fields": []
+      }
+    },
+    {
       "name": "InitEmployerIx",
       "type": {
         "kind": "struct",
         "fields": [
           {
             "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "uri",
             "type": "string"
           },
           {
@@ -897,6 +978,10 @@ export type KhojContract = {
         "fields": [
           {
             "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "uri",
             "type": "string"
           },
           {
@@ -1167,6 +1252,44 @@ export const IDL: KhojContract = {
       ]
     },
     {
+      "name": "aggregate",
+      "accounts": [
+        {
+          "name": "aggregatorLink",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "aggregator",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "employer",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "ix",
+          "type": {
+            "defined": "AggregateIx"
+          }
+        }
+      ]
+    },
+    {
       "name": "initTalent",
       "accounts": [
         {
@@ -1650,6 +1773,26 @@ export const IDL: KhojContract = {
       }
     },
     {
+      "name": "aggregatorLink",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "aggregator",
+            "type": "publicKey"
+          },
+          {
+            "name": "employer",
+            "type": "publicKey"
+          }
+        ]
+      }
+    },
+    {
       "name": "employer",
       "type": {
         "kind": "struct",
@@ -1673,6 +1816,10 @@ export const IDL: KhojContract = {
             "type": "string"
           },
           {
+            "name": "uri",
+            "type": "string"
+          },
+          {
             "name": "stakeAmount",
             "type": "u64"
           },
@@ -1691,6 +1838,10 @@ export const IDL: KhojContract = {
             "type": {
               "option": "string"
             }
+          },
+          {
+            "name": "isAggregator",
+            "type": "bool"
           }
         ]
       }
@@ -1716,6 +1867,10 @@ export const IDL: KhojContract = {
           },
           {
             "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "uri",
             "type": "string"
           },
           {
@@ -1880,12 +2035,23 @@ export const IDL: KhojContract = {
       }
     },
     {
+      "name": "AggregateIx",
+      "type": {
+        "kind": "struct",
+        "fields": []
+      }
+    },
+    {
       "name": "InitEmployerIx",
       "type": {
         "kind": "struct",
         "fields": [
           {
             "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "uri",
             "type": "string"
           },
           {
@@ -1967,6 +2133,10 @@ export const IDL: KhojContract = {
         "fields": [
           {
             "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "uri",
             "type": "string"
           },
           {

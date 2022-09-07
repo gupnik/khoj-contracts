@@ -11,6 +11,8 @@ pub fn assert_owner(pubkey: &Pubkey) -> bool {
 pub const PLATFORM_PREFIX: &str = "platform";
 pub const PLATFORM_SIZE: usize = 8 + std::mem::size_of::<Platform>() + 8;
 
+pub const AGGREGATOR_PREFIX: &str = "aggregator";
+
 pub const EMPLOYER_PREFIX: &str = "employer";
 
 pub const TALENT_PREFIX: &str = "talent";
@@ -40,20 +42,35 @@ pub struct Platform {
 }
 
 #[account]
+pub struct AggregatorLink {
+    pub bump: u8,
+    pub aggregator: Pubkey,
+    pub employer: Pubkey,
+}
+
+impl AggregatorLink {
+    pub fn size() -> usize {
+        8 + 1 + 32 + 32 + 8
+    }
+}
+
+#[account]
 pub struct Employer {
     pub bump: u8,
     pub wallet: Pubkey,
     pub pfp: Option<Pubkey>,
     pub name: String,
+    pub uri: String,
     pub stake_amount: u64,
     pub created_job_count: u64,
     pub discord_handle: Option<String>,
     pub twitter_handle: Option<String>,
+    pub is_aggregator: bool,
 }
 
 impl Employer {
     pub fn size() -> usize {
-        8 + 1 + 32 + 32 + 32 + 8 + 8 + 32 + 15 + 8
+        8 + 1 + 32 + 32 + 32 + MAX_URI_LENGTH + 8 + 8 + 32 + 15 + 1 + 8
     }
 }
 
@@ -63,6 +80,7 @@ pub struct Talent {
     pub wallet: Pubkey,
     pub pfp: Option<Pubkey>,
     pub name: String,
+    pub uri: String,
     pub stake_amount: u64,
     pub submitted_proposal_count: u64,
     pub skills: Vec<String>,
@@ -72,7 +90,7 @@ pub struct Talent {
 
 impl Talent {
     pub fn size() -> usize {
-        8 + 1 + 32 + 32 + 32 + 8 + 8 + MAX_SKILLS * MAX_SKILL_LENGTH + 32 + 15 + 8
+        8 + 1 + 32 + 32 + 32 + MAX_URI_LENGTH + 8 + 8 + MAX_SKILLS * MAX_SKILL_LENGTH + 32 + 15 + 8
     }
 }
 
@@ -106,6 +124,7 @@ impl Job {
             + 8
             + 32
             + 8
+            + 8
     }
 }
 
@@ -122,7 +141,7 @@ pub struct Proposal {
 
 impl Proposal {
     pub fn size() -> usize {
-        8 + 1 + 32 + 1 + MAX_URI_LENGTH + 8 + 32 + 8
+        8 + 1 + 32 + 32 + 1 + MAX_URI_LENGTH + 8 + 8 + 8
     }
 }
 

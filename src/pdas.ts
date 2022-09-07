@@ -31,6 +31,16 @@ export const findEmployerId = async (
   )
 }
 
+export const findAggregatorLinkId = async (
+  aggregatorId: web3.PublicKey,
+  employerId: web3.PublicKey
+): Promise<[web3.PublicKey, number]> => {
+  return web3.PublicKey.findProgramAddress(
+    [utils.bytes.utf8.encode(EMPLOYER_SEED), aggregatorId.toBuffer(), employerId.toBuffer()],
+    KHOJ_CONTRACT_PROGRAM_ADDRESS
+  )
+}
+
 export const findTalentId = async (
   wallet: web3.PublicKey
 ): Promise<[web3.PublicKey, number]> => {

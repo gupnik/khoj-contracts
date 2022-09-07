@@ -3,6 +3,7 @@ use {crate::state::*, anchor_lang::prelude::*};
 #[derive(AnchorSerialize, AnchorDeserialize)]
 pub struct InitTalentIx {
     pub name: String,
+    pub uri: String,
     pub pfp: Option<Pubkey>,
     pub skills: Vec<String>,
     pub discord_handle: Option<String>,
@@ -32,6 +33,7 @@ pub fn handler(ctx: Context<InitTalentCtx>, ix: InitTalentIx) -> Result<()> {
 
     talent.wallet = ctx.accounts.payer.key();
     talent.name = ix.name;
+    talent.uri = ix.uri;
     talent.pfp = ix.pfp;
     talent.skills = ix.skills;
 

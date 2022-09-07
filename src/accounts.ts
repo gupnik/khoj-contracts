@@ -6,6 +6,7 @@ import {
 } from '@project-serum/anchor'
 import {
   AccountData,
+  AggregatorLinkData,
   CREATOR_OFFSET,
   EmployerData,
   JobData,
@@ -197,6 +198,36 @@ export const getCreatedJobsForEmployer = async (
       // console.log(`Failed to decode data`);
     }
   })
+  return jobDatas.sort((a, b) =>
+    a.pubkey.toBase58().localeCompare(b.pubkey.toBase58())
+  )
+}
+
+export const getCreatedJobsForAggregator = async (
+  connection: Connection,
+  employer: PublicKey
+): Promise<AccountData<JobData>[]> => {
+  const programAccounts = await connection.getProgramAccounts(
+    KHOJ_CONTRACT_PROGRAM_ADDRESS,
+    {
+      filters: [{ memcmp: { offset: CREATOR_OFFSET, bytes: employer.toBase58() } }],
+    }
+  )
+
+  const coder = new BorshAccountsCoder(KHOJ_IDL)
+  const datas = await Promise.all(programAccounts.map(async (account) => {
+    try {
+      const data: AggregatorLinkData = coder.decode('job', account.account.data)
+      if (data) {
+        return await getCreatedJobsForEmployer(connection, data.employer)
+      } else {
+        return []
+      }
+    } catch (e) {
+      return []
+    }
+  }))
+  const jobDatas: AccountData<JobData>[] = Array.prototype.concat.apply([], datas);
   return jobDatas.sort((a, b) =>
     a.pubkey.toBase58().localeCompare(b.pubkey.toBase58())
   )

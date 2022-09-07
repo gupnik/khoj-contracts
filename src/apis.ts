@@ -5,6 +5,7 @@ import { PublicKey, Transaction } from '@solana/web3.js'
 import {
   withAcceptProposal,
   withAcceptWork,
+  withAggregate,
   withCloseJob,
   withInitEmployer,
   withInitJob,
@@ -23,6 +24,7 @@ export const registerEmployer = async (
   params: {
     creator: PublicKey
     name: string
+    uri: string
     pfpId?: PublicKey
     discordHandle?: string
     twitterHandle?: string
@@ -31,6 +33,19 @@ export const registerEmployer = async (
   const transaction = new Transaction()
 
   return withInitEmployer(transaction, connection, wallet, params)
+}
+
+export const aggregate = async (
+  connection: Connection,
+  wallet: Wallet,
+  params: {
+    creator: PublicKey
+    employer: PublicKey
+  }
+): Promise<[Transaction, PublicKey]> => {
+  const transaction = new Transaction()
+
+  return await withAggregate(transaction, connection, wallet, params)
 }
 
 export const updateEmployer = async (
@@ -53,6 +68,7 @@ export const registerTalent = async (
   params: {
     creator: PublicKey
     name: string
+    uri: string
     skills: string[]
     pfpId?: PublicKey
     discordHandle?: string

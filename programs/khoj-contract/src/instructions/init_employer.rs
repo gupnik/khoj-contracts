@@ -3,6 +3,7 @@ use {crate::state::*, anchor_lang::prelude::*};
 #[derive(AnchorSerialize, AnchorDeserialize)]
 pub struct InitEmployerIx {
     pub name: String,
+    pub uri: String,
     pub pfp: Option<Pubkey>,
     pub discord_handle: Option<String>,
     pub twitter_handle: Option<String>,
@@ -30,10 +31,12 @@ pub fn handler(ctx: Context<InitEmployerCtx>, ix: InitEmployerIx) -> Result<()> 
 
     employer.wallet = ctx.accounts.payer.key();
     employer.name = ix.name;
+    employer.uri = ix.uri;
     employer.pfp = ix.pfp;
 
     employer.created_job_count = 0;
     employer.stake_amount = 0;
+    employer.is_aggregator = false;
 
     if let Some(_) = ix.discord_handle {
         employer.discord_handle = ix.discord_handle;

@@ -17,6 +17,7 @@ export const KHOJ_IDL = KHOJ_CONTRACT_TYPES.IDL
 export type NeoTypes = AnchorTypes<KHOJ_PROGRAM>
 
 export const PLATFORM_SEED = 'platform'
+export const AGGREGATOR_SEED = 'aggregator'
 export const EMPLOYER_SEED = 'employer'
 export const TALENT_SEED = 'talent'
 export const STAKE_SEED = 'stake'
@@ -30,6 +31,7 @@ export const PROPOSAL_JOB_OFFSET = 41
 type Accounts = NeoTypes['Accounts']
 
 export type PlatformData = Accounts['platform']
+export type AggregatorLinkData = Accounts['aggregatorLink']
 export type EmployerData = Accounts['employer']
 export type TalentData = Accounts['talent']
 export type StakeData = Accounts['stake']

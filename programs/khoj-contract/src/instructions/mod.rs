@@ -1,5 +1,6 @@
 pub mod accept_proposal;
 pub mod accept_work;
+pub mod aggregate;
 pub mod close_job;
 pub mod init_employer;
 pub mod init_job;
@@ -15,6 +16,7 @@ pub mod update_talent;
 
 pub use accept_proposal::*;
 pub use accept_work::*;
+pub use aggregate::*;
 pub use close_job::*;
 pub use init_employer::*;
 pub use init_job::*;
