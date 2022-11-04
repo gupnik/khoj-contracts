@@ -1,6 +1,6 @@
 # @khoj-protocol/sdk
 
-Khoj is an open and transparent protocol that connects individuals and organizations (including DAOs) in a decentralized manner with extremely low fees.
+Khoj is an open and transparent protocol on solana that connects individuals and organizations (including DAOs) in a decentralized manner with extremely low fees.
 
 - [Website](khojprotocol.com)
 - [Alpha App](https://app.khojprotocol.com/)
